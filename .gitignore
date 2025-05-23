@@ -35,7 +35,6 @@ Thumbs.db
 
 # Environment / Secrets
 .env
-application.properties
 application.yml
 
 # Node / JS (just in case)

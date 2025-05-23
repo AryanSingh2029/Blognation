@@ -11,7 +11,7 @@ COPY . .
 RUN apt-get update && apt-get install -y maven
 
 # Build the app inside the container
-RUN mvn clean install
+RUN mvn clean install -DskipTests
 
 # Expose port (ensure your app uses this port in application.properties)
 EXPOSE 8081

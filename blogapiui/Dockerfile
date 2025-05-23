@@ -7,14 +7,14 @@ WORKDIR /app
 # Copy everything into container
 COPY . .
 
-# Make mvnw executable
-RUN chmod +x mvnw
+# Install Maven inside the container
+RUN apt-get update && apt-get install -y maven
 
 # Build the app inside the container
-RUN ./mvnw clean install
+RUN mvn clean install
 
-# Expose new port to avoid conflict with original backend
+# Expose port (ensure your app uses this port in application.properties)
 EXPOSE 8081
 
-# Run the app — update jar name if needed
+# Run the app — update JAR name if needed
 CMD ["java", "-jar", "target/blogapiui-0.0.1-SNAPSHOT.jar"]

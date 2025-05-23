@@ -1,0 +1,14 @@
+# blogapiui/render.yaml
+services:
+  - type: web
+    name: blogapi
+    env: java
+    buildCommand: "./mvnw clean install"
+    startCommand: "java -jar target/blogapiui-0.0.1-SNAPSHOT.jar"
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:mysql://<host>:<port>/<db>
+      - key: SPRING_DATASOURCE_USERNAME
+        value: <username>
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: <password>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Blog Post</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .post-container {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 20px;
+      background-color: #fdfdfd;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .post-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    #post-title {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .meta {
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    #post-content {
+      font-size: 18px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+    }
+
+    .left-nav nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: black;
+    }
+
+    .profile-dropdown {
+      position: relative;
+    }
+
+    .dropdown-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 35px;
+      background: white;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #f0f0f0;
+    }
+
+    .profile-dropdown:hover .dropdown-menu {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="left-nav">
+        <h1><a href="feed.html" style="color: black; text-decoration: none;">BlogNation</a></h1>
+        <nav>
+          <a href="feed.html">BLOG</a>
+        </nav>
+      </div>
+      <div class="right-nav" id="auth-controls">
+        <!-- Filled by script -->
+      </div>
+    </div>
+  </header>
+
+  <main class="post-container">
+    <img id="post-image" alt="Post Image" class="post-image" />
+    <h2 id="post-title">Loading...</h2>
+    <div class="meta" id="post-author"></div>
+    <p id="post-content"></p>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const postId = params.get("id");
+
+    if (postId) {
+      fetch(`http://localhost:8081/api/posts/${postId}`)
+        .then(res => {
+          if (!res.ok) throw new Error("Post not found");
+          return res.json();
+        })
+        .then(post => {
+          document.getElementById("post-title").textContent = post.title;
+          document.getElementById("post-author").textContent = `By ${post.author}`;
+          document.getElementById("post-content").textContent = post.content;
+          document.getElementById("post-image").src = post.imageUrl || "assets/default.jpg";
+        })
+        .catch(err => {
+          document.getElementById("post-title").textContent = "Post Not Found";
+          document.getElementById("post-content").textContent = "Sorry, we couldn't find the blog post you're looking for.";
+          document.getElementById("post-author").textContent = "";
+        });
+    } else {
+      document.getElementById("post-title").textContent = "Invalid Request";
+      document.getElementById("post-content").textContent = "No post ID provided in the URL.";
+      document.getElementById("post-author").textContent = "";
+    }
+
+    // Auth logic (profile dropdown or login/signup)
+    const userId = localStorage.getItem("userId");
+    const authControls = document.getElementById("auth-controls");
+
+    if (userId) {
+      authControls.innerHTML = `
+        <div class="profile-dropdown">
+          <img src="assets/pic-5.jpg" alt="Profile" class="dropdown-icon" />
+          <div class="dropdown-menu">
+            <a href="profile.html">Profile Details</a>
+            <a href="create.html">Create Post</a>
+            <a href="edit.html">Edit Post</a>
+            <a href="edit.html">Delete Post</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#" onclick="logout()">Logout</a>
+          </div>
+        </div>
+      `;
+    } else {
+      authControls.innerHTML = `
+        <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="signup.html" class="signup-btn"><i class="fas fa-user-plus"></i> Sign Up</a>
+      `;
+    }
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

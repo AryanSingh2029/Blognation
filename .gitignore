@@ -1,0 +1,44 @@
+# === Java / Spring Boot ===
+target/
+*.class
+*.jar
+*.war
+*.log
+*.iml
+*.ipr
+*.iws
+*.db
+*.h2.db
+
+# Maven wrapper
+.mvn/
+!**/mvnw
+!**/mvnw.cmd
+
+# IntelliJ / Eclipse
+.idea/
+*.sw?
+*.bak
+*.tmp
+*.orig
+*.rej
+*.sublime-workspace
+*.sublime-project
+.project
+.classpath
+.settings/
+.vscode/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Environment / Secrets
+.env
+application.properties
+application.yml
+
+# Node / JS (just in case)
+node_modules/
+dist/
+build/

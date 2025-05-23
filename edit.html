@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Your Posts</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .post-card {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      background-color: #f9f9f9;
+    }
+    .edit-form {
+      display: none;
+      margin-top: 15px;
+    }
+    .edit-form input, .edit-form textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+    .edit-form .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-primary {
+      background-color: #2e2e2e;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+    .btn-danger {
+      background-color: #b00020;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+
+    /* Profile dropdown styling */
+    .profile-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+      padding: 10px;
+      min-width: 160px;
+    }
+    .dropdown-menu a {
+      display: block;
+      padding: 8px 10px;
+      text-decoration: none;
+      color: #333;
+    }
+    .dropdown-menu a:hover {
+      background-color: #f0f0f0;
+    }
+    .profile-dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    .form-container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="left-nav">
+        <h1>BlogNation</h1>
+        <nav>
+          <a href="feed.html">BLOG</a>
+        </nav>
+      </div>
+      <div class="right-nav">
+        <div class="profile-dropdown">
+          <img src="assets/pic-5.jpg" alt="Profile" class="dropdown-icon" />
+          <div class="dropdown-menu">
+            <a href="profile.html">Profile Details</a>
+            <a href="create.html">Create Post</a>
+            <a href="edit.html">Edit Post</a>
+            <a href="edit.html">Delete Post</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="logout.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="form-container">
+    <h2>Edit Your Blog Posts</h2>
+    <div id="post-list"></div>
+  </main>
+
+  <script src="js/edit.js"></script>
+</body>
+</html>

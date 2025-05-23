@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Profile - BlogNation</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/profile.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="left-nav">
+        <h1>BlogNation</h1>
+        <nav>
+          <a href="feed.html">BLOG</a>
+        </nav>
+      </div>
+      <div class="right-nav">
+        <div class="profile-menu">
+          <img src="assets/pic-5.jpg" class="profile-icon" alt="Profile" />
+          <div class="dropdown">
+            <a href="profile.html">Profile Details</a>
+            <a href="create.html">Create Post</a>
+            <a href="edit.html">Edit Post</a>
+            <a href="edit.html">Delete Post</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#" onclick="logout()">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="profile-container">
+    <h2>User Profile</h2>
+
+    <form id="profile-form">
+      <div class="profile-row">
+        <label>Username:</label>
+        <input type="text" id="username" value="aryan_singh" readonly />
+        <button type="button" id="editBtn" style="margin-left: 10px;">Edit</button>
+      </div>
+
+      <div class="profile-row">
+        <label>Email:</label>
+        <span>aryan@example.com</span>
+      </div>
+
+      <div class="profile-row">
+        <label>Password:</label>
+        <span>••••••••</span>
+      </div>
+
+      <div class="btn-row">
+        <button type="submit" class="save-btn">Save Changes</button>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    function logout() {
+      localStorage.clear();
+      window.location.href = "index.html";
+    }
+
+    const userId = 1; // Replace with dynamic ID if needed
+    const usernameInput = document.getElementById("username");
+    const form = document.getElementById("profile-form");
+    const editBtn = document.getElementById("editBtn");
+
+    editBtn.addEventListener("click", () => {
+      usernameInput.removeAttribute("readonly");
+      usernameInput.focus();
+    });
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const newUsername = usernameInput.value;
+
+      try {
+        const response = await fetch(`http://localhost:8081/api/users/${userId}/username`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username: newUsername }),
+        });
+
+        if (response.ok) {
+          const updatedUser = await response.json();
+          alert("Username updated to: " + updatedUser.username);
+          usernameInput.setAttribute("readonly", true);
+        } else {
+          alert("Failed to update username.");
+        }
+      } catch (err) {
+        console.error("Error:", err);
+        alert("Something went wrong!");
+      }
+    });
+  </script>
+</body>
+</html>

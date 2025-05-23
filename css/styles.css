@@ -1,0 +1,184 @@
+/* Global */
+body {
+  font-family: 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: white;
+  color: #333;
+}
+
+/* Header */
+.header-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-nav h1 {
+  margin: 0;
+  font-size: 2.2em;
+  font-weight: bold;
+}
+
+nav {
+  display: inline-block;
+  margin-top: 5px;
+}
+
+nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #999;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+nav a.active {
+  color: #333;
+}
+
+/* Login / Signup buttons */
+.right-nav {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.right-nav a {
+  text-decoration: none;
+  color: #666;
+  font-weight: 500;
+  font-size: 0.95em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+
+.right-nav a:hover {
+  color: #000;
+}
+
+.signup-btn {
+  background: #333;
+  color: #fff !important;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.signup-btn:hover {
+  background: #111;
+}
+
+/* Blog List Page */
+#blog-list {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.blog-entry {
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.blog-entry img {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.blog-entry h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.blog-entry .meta {
+  font-size: 0.9em;
+  color: #888;
+  margin-bottom: 15px;
+}
+
+.blog-entry p {
+  line-height: 1.6em;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.read-more {
+  color: #555;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* About Page */
+.about-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.about-container h2 {
+  font-weight: bold;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+
+.about-container p {
+  color: #444;
+  line-height: 1.6em;
+  margin-bottom: 15px;
+}
+
+/* Post Page */
+.post-container {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 0 20px;
+  text-align: left;
+}
+
+.post-image {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 30px;
+}
+
+.post-container h2 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.post-container .meta {
+  text-align: center;
+  font-size: 0.9em;
+  color: #888;
+  margin-bottom: 30px;
+}
+
+.post-container p {
+  font-size: 1em;
+  color: #444;
+  line-height: 1.8em;
+  margin-bottom: 20px;
+}
+
+.post-container h3 {
+  margin-top: 30px;
+  font-size: 1.2em;
+  color: #222;
+}

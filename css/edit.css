@@ -1,0 +1,111 @@
+.edit-container {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.edit-container h2 {
+  font-size: 1.8em;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-form input[type="text"],
+.edit-form input[type="file"],
+.edit-form textarea {
+  padding: 10px 14px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: inherit;
+}
+
+.edit-form textarea {
+  height: 200px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.btn-row {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.update-btn {
+  background-color: #333;
+  color: white;
+  font-weight: 600;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.update-btn:hover {
+  background-color: #111;
+}
+
+.delete-btn {
+  background-color: #e53935;
+  color: white;
+  font-weight: 600;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #c62828;
+}
+
+/* Reuse profile icon and dropdown from feed/create pages */
+.profile-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+
+.profile-menu {
+  position: relative;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 46px;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.profile-menu:hover .dropdown {
+  display: block;
+}
+
+.dropdown a {
+  display: block;
+  padding: 10px 16px;
+  text-decoration: none;
+  color: #333;
+  font-size: 0.95em;
+}
+
+.dropdown a:hover {
+  background: #f2f2f2;
+}

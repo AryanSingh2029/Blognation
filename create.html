@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Create Blog Post</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .form-container {
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 20px;
+    }
+    form input,
+    form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+    .btn-primary {
+      background-color: #2e2e2e;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+    .profile-dropdown {
+      position: relative;
+    }
+    .dropdown-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 35px;
+      background: white;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+    .dropdown-menu a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      color: #333;
+      white-space: nowrap;
+    }
+    .dropdown-menu a:hover {
+      background-color: #f0f0f0;
+    }
+    .profile-dropdown:hover .dropdown-menu {
+      display: block;
+    }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+    }
+    .left-nav h1 {
+      margin: 0;
+    }
+    .left-nav nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="left-nav">
+        <h1>BlogNation</h1>
+        <nav>
+          <a href="feed.html" class="active">BLOG</a>
+        </nav>
+      </div>
+      <div class="right-nav">
+        <div class="profile-dropdown">
+          <img src="assets/pic-5.jpg" alt="Profile" class="dropdown-icon" />
+          <div class="dropdown-menu">
+            <a href="profile.html">Profile Details</a>
+            <a href="create.html">Create Post</a>
+            <a href="edit.html">Edit Post</a>
+            <a href="edit.html">Delete Post</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="logout.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="form-container">
+    <h2 style="text-align:center;">Create a New Blog Post</h2>
+    <form id="create-form">
+      <input type="text" id="title" placeholder="Post Title" required />
+      <input type="text" id="author" placeholder="Author Name" required />
+      <input type="text" id="imageUrl" placeholder="Image URL (e.g., assets/pic-3.jpg)" />
+      <textarea id="content" rows="8" placeholder="Write your blog content here..." required></textarea>
+      <button type="submit" class="btn-primary">Publish Post</button>
+    </form>
+  </main>
+
+  <script src="js/create.js"></script>
+</body>
+</html>

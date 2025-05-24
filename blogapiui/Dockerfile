@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y maven
 RUN mvn clean install -DskipTests
 
 # Expose port (ensure your app uses this port in application.properties)
-EXPOSE 8081
+EXPOSE 8080
 
 # Run the app — update JAR name if needed
 CMD ["java", "-jar", "target/blogapiui-0.0.1-SNAPSHOT.jar"]

@@ -8,7 +8,7 @@ document.getElementById("create-form").addEventListener("submit", function (e) {
 
   const postData = { title, author, content, imageUrl };
 
-  fetch("http://localhost:8081/api/posts", {
+  fetch("https://blognation-d0rz.onrender.com/api/posts", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

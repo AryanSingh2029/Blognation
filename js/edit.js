@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("post-list");
 
   // Fetch all posts by current user
-  fetch("http://localhost:8081/api/posts")
+  fetch("https://blognation-d0rz.onrender.com/api/posts")
     .then(res => res.json())
     .then(posts => {
       container.innerHTML = "";
@@ -50,7 +50,7 @@ function updatePost(postId) {
 
   const updatedPost = { title, author, content };
 
-  fetch(`http://localhost:8081/api/posts/${postId}`, {
+  fetch(`https://blognation-d0rz.onrender.com/api/posts/${postId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(updatedPost)
@@ -71,7 +71,7 @@ function updatePost(postId) {
 
 function deletePost(postId) {
   if (confirm("Are you sure you want to delete this post?")) {
-    fetch(`http://localhost:8081/api/posts/${postId}`, {
+    fetch(`https://blognation-d0rz.onrender.com/api/posts/${postId}`, {
       method: "DELETE"
     })
       .then(res => {

@@ -173,6 +173,8 @@
   </main>
 
   <script>
+    const BASE_URL = "https://blognation-d0rz.onrender.com/api";
+
     document.addEventListener("DOMContentLoaded", () => {
       const icon = document.querySelector(".dropdown-icon");
       const menu = document.querySelector(".dropdown-menu");
@@ -187,7 +189,7 @@
 
       const container = document.getElementById("dashboard-posts");
 
-      fetch("http://localhost:8081/api/posts")
+      fetch(`${BASE_URL}/posts`)
         .then(res => res.json())
         .then(posts => {
           container.innerHTML = "";
@@ -207,13 +209,13 @@
             `;
             container.appendChild(card);
 
-            fetch(`http://localhost:8081/api/likes/${post.id}`)
+            fetch(`${BASE_URL}/likes/${post.id}`)
               .then(res => res.json())
               .then(count => {
                 document.getElementById(`like-${post.id}`).innerText = count;
               });
 
-            fetch(`http://localhost:8081/api/comments/${post.id}`)
+            fetch(`${BASE_URL}/comments/${post.id}`)
               .then(res => res.json())
               .then(comments => {
                 document.getElementById(`comment-count-${post.id}`).innerText = comments.length;
@@ -224,7 +226,7 @@
       window.toggleComments = function(postId) {
         const section = document.getElementById(`comments-${postId}`);
         if (section.style.display === "none") {
-          fetch(`http://localhost:8081/api/comments/${postId}`)
+          fetch(`${BASE_URL}/comments/${postId}`)
             .then(res => res.json())
             .then(comments => {
               section.innerHTML = comments.map(c => `<p><strong>${c.author}:</strong> ${c.content}</p>`).join("");
@@ -235,39 +237,37 @@
         }
       };
 
-      // Followers button logic
       document.getElementById("seeFollowersBtn").addEventListener("click", async function () {
-  const userId = localStorage.getItem("userId");
-  const container = document.getElementById("followersList");
+        const userId = localStorage.getItem("userId");
+        const container = document.getElementById("followersList");
 
-  if (!userId) {
-    alert("User not logged in");
-    return;
-  }
+        if (!userId) {
+          alert("User not logged in");
+          return;
+        }
 
-  if (container.style.display === "block") {
-    container.style.display = "none";
-    return;
-  }
+        if (container.style.display === "block") {
+          container.style.display = "none";
+          return;
+        }
 
-  try {
-    const res = await fetch(`http://localhost:8081/api/follow/${userId}/followers`);
-    const data = await res.json();
+        try {
+          const res = await fetch(`${BASE_URL}/follow/${userId}/followers`);
+          const data = await res.json();
 
-    if (res.ok) {
-      container.style.display = "block";
-      container.innerHTML = `<h3>Followers (${data.length})</h3><ul>` +
-        data.map(user => `<li>${user.username} (${user.email})</li>`).join("") +
-        `</ul>`;
-    } else {
-      container.innerHTML = "<p>Failed to fetch followers.</p>";
-    }
-  } catch (err) {
-    console.error("Error fetching followers:", err);
-    container.innerHTML = "<p>Something went wrong.</p>";
-  }
-});
-
+          if (res.ok) {
+            container.style.display = "block";
+            container.innerHTML = `<h3>Followers (${data.length})</h3><ul>` +
+              data.map(user => `<li>${user.username} (${user.email})</li>`).join("") +
+              `</ul>`;
+          } else {
+            container.innerHTML = "<p>Failed to fetch followers.</p>";
+          }
+        } catch (err) {
+          console.error("Error fetching followers:", err);
+          container.innerHTML = "<p>Something went wrong.</p>";
+        }
+      });
     });
   </script>
 </body>

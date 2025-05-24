@@ -13,7 +13,6 @@
       border-radius: 8px;
       margin-bottom: 15px;
     }
-
     .blog-card {
       max-width: 800px;
       margin: 40px auto;
@@ -23,20 +22,17 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
       text-align: center;
     }
-
     .comment-section {
       margin-top: 10px;
       background: #f3f3f3;
       padding: 10px;
       border-radius: 8px;
     }
-
     .comment-input {
       width: 80%;
       padding: 6px;
       border-radius: 5px;
     }
-
     .submit-comment {
       padding: 6px 10px;
       margin-left: 5px;
@@ -78,9 +74,9 @@
       window.location.href = "index.html";
     }
 
+    const baseURL = "https://blognation-d0rz.onrender.com";
     const params = new URLSearchParams(window.location.search);
     const isFollowing = params.get("filter") === "following";
-
     const blogTab = document.querySelector('a[href="feed.html"]');
     const followTab = document.getElementById("following-tab");
 
@@ -99,7 +95,6 @@
     async function fetchAndRenderPosts(posts) {
       const container = document.getElementById("feed-container");
       container.innerHTML = "";
-
       if (posts.length === 0) {
         container.innerHTML = "<p style='text-align:center;'>No results found.</p>";
         return;
@@ -128,22 +123,19 @@
         `;
         container.appendChild(card);
 
-        // LIKE logic
         const likeBtn = card.querySelector(".like-btn");
         const username = localStorage.getItem("username");
         let liked = false;
 
         if (username) {
-          const statusRes = await fetch(`http://localhost:8081/api/likes/${post.id}/liked/${username}`);
+          const statusRes = await fetch(`${baseURL}/api/likes/${post.id}/liked/${username}`);
           liked = await statusRes.json();
-          likeBtn.innerHTML = liked
-            ? `<i class="fas fa-thumbs-up"></i> Liked`
-            : `<i class="far fa-thumbs-up"></i> Like`;
+          likeBtn.innerHTML = liked ? `<i class="fas fa-thumbs-up"></i> Liked` : `<i class="far fa-thumbs-up"></i> Like`;
         }
 
         likeBtn.addEventListener("click", async () => {
           if (!username) return alert("Please log in to like posts.");
-          const url = `http://localhost:8081/api/likes/${post.id}`;
+          const url = `${baseURL}/api/likes/${post.id}`;
           const method = liked ? "DELETE" : "POST";
 
           const res = await fetch(url, {
@@ -154,22 +146,18 @@
 
           if (res.ok) {
             liked = !liked;
-            likeBtn.innerHTML = liked
-              ? `<i class="fas fa-thumbs-up"></i> Liked`
-              : `<i class="far fa-thumbs-up"></i> Like`;
+            likeBtn.innerHTML = liked ? `<i class="fas fa-thumbs-up"></i> Liked` : `<i class="far fa-thumbs-up"></i> Like`;
           } else {
-            const err = await res.text();
-            alert(err);
+            alert("Like/Unlike failed.");
           }
         });
 
-        // SHARE logic
         const shareBtn = card.querySelector(".share-btn");
         shareBtn.addEventListener("click", () => {
           const shareData = {
             title: post.title,
             text: post.content.slice(0, 100),
-            url: `http://localhost:8081/post.html?id=${post.id}`
+            url: `https://blognation-d0rz.onrender.com/post.html?id=${post.id}`
           };
 
           if (navigator.share) {
@@ -181,7 +169,6 @@
           }
         });
 
-        // COMMENT logic
         const commentBtn = card.querySelector(".comment-btn");
         const commentSection = card.querySelector(`#comments-${post.id}`);
         commentBtn.addEventListener("click", async () => {
@@ -195,30 +182,22 @@
     }
 
     async function loadComments(postId) {
-      try {
-        const res = await fetch(`http://localhost:8081/api/comments/${postId}`);
-        const comments = await res.json();
-        const listEl = document.getElementById(`comments-list-${postId}`);
-        listEl.innerHTML = comments.map(c => `
-          <p><strong>${c.username}</strong>: ${c.content}</p>
-        `).join('');
-      } catch (err) {
-        console.error("Failed to load comments:", err);
-      }
+      const res = await fetch(`${baseURL}/api/comments/${postId}`);
+      const comments = await res.json();
+      const list = document.getElementById(`comments-list-${postId}`);
+      list.innerHTML = comments.map(c => `<p><strong>${c.username}</strong>: ${c.content}</p>`).join('');
     }
 
-    document.addEventListener("click", async (e) => {
+    document.addEventListener("click", async e => {
       if (e.target.classList.contains("submit-comment")) {
         const postId = e.target.dataset.postId;
         const section = document.getElementById(`comments-${postId}`);
         const input = section.querySelector(".comment-input");
         const content = input.value.trim();
         const username = localStorage.getItem("username");
+        if (!username || !content) return;
 
-        if (!username) return alert("Please log in to comment.");
-        if (!content) return alert("Comment cannot be empty.");
-
-        const res = await fetch(`http://localhost:8081/api/comments/${postId}`, {
+        const res = await fetch(`${baseURL}/api/comments/${postId}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, content })
@@ -236,50 +215,35 @@
     async function searchBlogs() {
       const query = document.getElementById("searchInput").value.trim();
       if (!query) return;
-
-      try {
-        const res = await fetch(`http://localhost:8081/api/posts/search?query=${encodeURIComponent(query)}`);
-        const posts = await res.json();
-        fetchAndRenderPosts(posts);
-      } catch (err) {
-        console.error("Search error:", err);
-        alert("Failed to fetch search results.");
-      }
+      const res = await fetch(`${baseURL}/api/posts/search?query=${encodeURIComponent(query)}`);
+      const posts = await res.json();
+      fetchAndRenderPosts(posts);
     }
 
     async function attachFollowListeners() {
       const userId = localStorage.getItem("userId");
-      const followBtns = document.querySelectorAll(".follow-btn");
-
       if (!userId) return;
 
-      let following = [];
-      try {
-        const res = await fetch(`http://localhost:8081/api/follow/${userId}/following`);
-        following = await res.json();
-      } catch (e) {
-        console.error("Failed to get following list:", e);
-      }
+      const res = await fetch(`${baseURL}/api/follow/${userId}/following`);
+      const following = await res.json();
+      const followBtns = document.querySelectorAll(".follow-btn");
 
       followBtns.forEach(btn => {
-        const author = btn.getAttribute("data-author");
-        const followed = following.some(u => u.username === author);
-        btn.innerHTML = followed
-          ? '<i class="fas fa-user-minus"></i> Unfollow'
-          : '<i class="fas fa-user-plus"></i> Follow Author';
+        const author = btn.dataset.author;
+        const isFollowing = following.some(f => f.username === author);
+        btn.innerHTML = isFollowing ? '<i class="fas fa-user-minus"></i> Unfollow' : '<i class="fas fa-user-plus"></i> Follow Author';
 
-        btn.onclick = async () => {
-          const authorRes = await fetch(`http://localhost:8081/api/users`);
-          const allUsers = await authorRes.json();
+        btn.addEventListener("click", async () => {
+          const allUsers = await fetch(`${baseURL}/api/users`).then(res => res.json());
           const authorUser = allUsers.find(u => u.username === author);
-          if (!authorUser) return alert("Author user not found");
+          if (!authorUser) return;
 
           const followingId = authorUser.id;
           const action = btn.textContent.includes("Unfollow") ? "unfollow" : "follow";
           const method = action === "follow" ? "POST" : "DELETE";
-          const url = `http://localhost:8081/api/follow/${userId}/${action}/${followingId}`;
 
-          const response = await fetch(url, { method });
+          const response = await fetch(`${baseURL}/api/follow/${userId}/${action}/${followingId}`, { method });
+
           if (response.ok) {
             btn.innerHTML = action === "follow"
               ? '<i class="fas fa-user-minus"></i> Unfollow'
@@ -287,17 +251,17 @@
           } else {
             alert("Follow/Unfollow failed.");
           }
-        };
+        });
       });
     }
 
     async function loadInitialPosts() {
-      const res = await fetch("http://localhost:8081/api/posts");
+      const res = await fetch(`${baseURL}/api/posts`);
       const posts = await res.json();
 
       if (isFollowing) {
         const userId = localStorage.getItem("userId");
-        const followRes = await fetch(`http://localhost:8081/api/follow/${userId}/following`);
+        const followRes = await fetch(`${baseURL}/api/follow/${userId}/following`);
         const following = await followRes.json();
         const authors = following.map(u => u.username);
         const filtered = posts.filter(p => authors.includes(p.author));
@@ -307,9 +271,7 @@
       }
     }
 
-    window.addEventListener("DOMContentLoaded", () => {
-      loadInitialPosts();
-    });
+    window.addEventListener("DOMContentLoaded", loadInitialPosts);
   </script>
 </body>
 </html>

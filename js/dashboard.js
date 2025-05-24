@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  fetch("http://localhost:8081/api/posts")
+  fetch("https://blognation-d0rz.onrender.com/api/posts")
     .then(res => res.json())
     .then(posts => {
       const container = document.getElementById("dashboard-posts");
@@ -24,13 +24,13 @@ document.addEventListener("DOMContentLoaded", () => {
         container.appendChild(card);
 
         // Fetch like and comment counts
-        fetch(`http://localhost:8081/api/likes/${post.id}`)
+        fetch(`https://blognation-d0rz.onrender.com/api/likes/${post.id}`)
           .then(res => res.json())
           .then(count => {
             document.getElementById(`like-count-${post.id}`).innerText = count;
           });
 
-        fetch(`http://localhost:8081/api/comments/${post.id}`)
+        fetch(`https://blognation-d0rz.onrender.com/api/comments/${post.id}`)
           .then(res => res.json())
           .then(comments => {
             document.getElementById(`comment-count-${post.id}`).innerText = comments.length;
@@ -50,7 +50,7 @@ function viewComments(postId) {
   box.style.display = visible ? "none" : "block";
 
   if (!visible) {
-    fetch(`http://localhost:8081/api/comments/${postId}`)
+    fetch(`https://blognation-d0rz.onrender.com/api/comments/${postId}`)
       .then(res => res.json())
       .then(comments => {
         box.innerHTML = comments.length === 0

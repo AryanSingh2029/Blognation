@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  fetch("http://localhost:8081/api/posts")
+  fetch("https://blognation-d0rz.onrender.com/api/posts")
     .then(response => response.json())
     .then(posts => {
       const container = document.getElementById("post-container");

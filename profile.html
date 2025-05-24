@@ -79,7 +79,7 @@
       const newUsername = usernameInput.value;
 
       try {
-        const response = await fetch(`http://localhost:8081/api/users/${userId}/username`, {
+        const response = await fetch(`https://blognation-d0rz.onrender.com/api/users/${userId}/username`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

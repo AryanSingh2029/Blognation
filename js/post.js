@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     authorEl.textContent = `By ${post.author}`;
     imageEl.src = post.image;
   } else {
-    fetch(`http://localhost:8081/api/posts/${postId}`)
+    fetch(`https://blognation-d0rz.onrender.com/api/posts/${postId}`)
       .then(response => {
         if (!response.ok) throw new Error("Post not found");
         return response.json();
@@ -43,13 +43,13 @@ document.addEventListener("DOMContentLoaded", function () {
         titleEl.textContent = post.title;
         contentEl.textContent = post.content;
         authorEl.textContent = `By ${post.author}`;
-        imageEl.src = "assets/default.jpg"; // or later use post.imageUrl
+        imageEl.src = "assets/default.jpg"; // or use post.imageUrl if available
       })
       .catch(error => {
         titleEl.textContent = "Post not found";
         contentEl.textContent = "This blog post does not exist or has been deleted.";
         authorEl.textContent = "";
-        imageEl.src = "assets/not-found.jpg"; // optional fallback image
+        imageEl.src = "assets/not-found.jpg"; // fallback image
       });
   }
 });

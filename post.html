@@ -117,7 +117,7 @@
     const postId = params.get("id");
 
     if (postId) {
-      fetchfetch(`https://blognation-d0rz.onrender.com/api/posts/${postId}`)
+        fetch(`https://blognation-d0rz.onrender.com/api/posts/${postId}`)
         .then(res => {
           if (!res.ok) throw new Error("Post not found");
           return res.json();

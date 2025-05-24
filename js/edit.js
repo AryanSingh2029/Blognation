@@ -17,10 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
           <p>${truncate(post.content, 150)}</p>
           <button onclick="toggleForm(${post.id})" class="btn-primary">Edit</button>
 
-          <form class="edit-form" id="form-${post.id}">
+          <form class="edit-form" id="form-${post.id}" style="display:none;">
             <input type="text" name="title" value="${post.title}" required />
             <input type="text" name="author" value="${post.author}" required />
             <textarea name="content" rows="5" required>${post.content}</textarea>
+            <input type="hidden" name="imageUrl" value="${post.imageUrl || ''}" />
             <div class="btn-group">
               <button type="button" onclick="updatePost(${post.id})" class="btn-primary">Update</button>
               <button type="button" onclick="deletePost(${post.id})" class="btn-danger">Delete</button>
@@ -47,8 +48,9 @@ function updatePost(postId) {
   const title = form.querySelector("input[name='title']").value;
   const author = form.querySelector("input[name='author']").value;
   const content = form.querySelector("textarea[name='content']").value;
+  const imageUrl = form.querySelector("input[name='imageUrl']").value;
 
-  const updatedPost = { title, author, content };
+  const updatedPost = { title, author, content, imageUrl };
 
   fetch(`https://blognation-d0rz.onrender.com/api/posts/${postId}`, {
     method: "PUT",

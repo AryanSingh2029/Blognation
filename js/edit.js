@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <input type="text" name="title" value="${post.title}" required />
             <input type="text" name="author" value="${post.author}" required />
             <textarea name="content" rows="5" required>${post.content}</textarea>
-            <input type="hidden" name="imageUrl" value="${post.imageUrl || ''}" />
+            <input type="text" name="imageUrl" value="${post.imageUrl || ''}" />
             <div class="btn-group">
               <button type="button" onclick="updatePost(${post.id})" class="btn-primary">Update</button>
               <button type="button" onclick="deletePost(${post.id})" class="btn-danger">Delete</button>

@@ -2,9 +2,13 @@ package com.example.blogapi.controller;
 
 import com.example.blogapi.entity.Post;
 import com.example.blogapi.payload.PostDto;
+import com.example.blogapi.repository.CommentRepository;
+import com.example.blogapi.repository.LikeRepository;
 import com.example.blogapi.repository.PostRepository;
 import com.example.blogapi.service.PostService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,15 @@ public class PostController {
 
     private final PostService postService;
     private final PostRepository postRepo;
+    @Autowired
+private CommentRepository commentRepository;
+
+@Autowired
+private LikeRepository likeRepository;
+
+@Autowired
+private PostRepository postRepository; // In case it's not already there
+
 
     // Create a post
     @PostMapping
@@ -47,12 +60,23 @@ public class PostController {
         return new ResponseEntity<>(updatedPost, HttpStatus.OK);
     }
 
-    // Delete post
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePost(@PathVariable long id) {
-        postService.deletePost(id);
-        return new ResponseEntity<>("Post deleted successfully", HttpStatus.OK);
-    }
+public ResponseEntity<?> deletePost(@PathVariable Long id) {
+    Post post = postRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Post not found"));
+
+    // Delete all comments linked to the post
+    commentRepository.deleteByPost(post);
+
+    // Delete all likes linked to the post
+    likeRepository.deleteByPost(post);
+
+    // Now delete the post safely
+    postRepository.delete(post);
+
+    return ResponseEntity.ok().build();
+}
+
 
     // Search posts by title or author
     @GetMapping("/search")

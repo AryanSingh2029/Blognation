@@ -5,7 +5,7 @@ import com.example.blogapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import com.example.blogapi.payload.UserDto;
 import java.util.List;
 import java.util.Map;
 
@@ -58,5 +58,15 @@ public ResponseEntity<?> loginUser(@RequestBody Map<String, String> credentials)
             .filter(user -> user.getPassword().equals(password))
             .<ResponseEntity<?>>map(ResponseEntity::ok) // generic fix
             .orElse(ResponseEntity.status(401).body("Invalid email or password"));
+}
+// ✅ Get single user by ID (for profile page)
+@GetMapping("/{id}")
+public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+    return userRepo.findById(id)
+            .map(user -> {
+                UserDto dto = new UserDto(user.getId(), user.getUsername(), user.getEmail());
+                return ResponseEntity.ok(dto);
+            })
+            .orElse(ResponseEntity.notFound().build());
 }
 }

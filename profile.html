@@ -91,7 +91,7 @@
         const user = await response.json();
         usernameInput.value = user.username || "";
         emailSpan.innerText = user.email || "";
-        passwordSpan.innerText = "********";
+        passwordSpan.innerText = "********"; // Always masked for safety
 
       } catch (err) {
         console.error("Failed to load user:", err);

@@ -260,15 +260,15 @@
       const posts = await res.json();
 
       if (isFollowing) {
-        const userId = localStorage.getItem("userId");
-        const followRes = await fetch(`${baseURL}/api/follow/${userId}/following`);
-        const following = await followRes.json();
-        const authors = following.map(u => u.username);
-        const filtered = posts.filter(p => authors.includes(p.author));
-        fetchAndRenderPosts(filtered);
-      } else {
-        fetchAndRenderPosts(posts);
-      }
+  const userId = localStorage.getItem("userId");
+  const followRes = await fetch(`${baseURL}/api/follow/${userId}/following`);
+  const following = await followRes.json();
+  const authors = following.map(u => u.username);
+  const filtered = posts.filter(p => authors.includes(p.author)).reverse(); // 🔁 latest first
+  fetchAndRenderPosts(filtered);
+} else {
+  fetchAndRenderPosts(posts.reverse()); // 🔁 latest first
+}
     }
 
     window.addEventListener("DOMContentLoaded", loadInitialPosts);

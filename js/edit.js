@@ -1,11 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("post-list");
 
-  // Fetch all posts by current user
-  fetch("https://blognation-d0rz.onrender.com/api/posts")
+  const userId = localStorage.getItem("userId"); // ✅ Get user ID from localStorage
+  if (!userId) {
+    container.innerHTML = "<p>You must be logged in to view your posts.</p>";
+    return;
+  }
+
+  // ✅ Fetch all posts by the current user
+  fetch(`https://blognation-d0rz.onrender.com/api/posts/user/${userId}`)
     .then(res => res.json())
     .then(posts => {
       container.innerHTML = "";
+
+      if (posts.length === 0) {
+        container.innerHTML = "<p>No posts found.</p>";
+        return;
+      }
 
       posts.forEach(post => {
         const card = document.createElement("div");
@@ -59,14 +70,14 @@ function updatePost(postId) {
   })
     .then(res => {
       if (res.ok) {
-        alert("Post updated!");
+        alert(" Post updated!");
         location.reload();
       } else {
-        alert("Update failed.");
+        alert(" Update failed.");
       }
     })
     .catch(err => {
-      alert("Error occurred.");
+      alert(" Error occurred while updating.");
       console.error(err);
     });
 }
@@ -78,14 +89,14 @@ function deletePost(postId) {
     })
       .then(res => {
         if (res.ok) {
-          alert("Post deleted.");
+          alert("🗑️ Post deleted.");
           location.reload();
         } else {
-          alert("Delete failed.");
+          alert(" Delete failed.");
         }
       })
       .catch(err => {
-        alert("Error deleting post.");
+        alert(" Error deleting post.");
         console.error(err);
       });
   }

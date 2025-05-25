@@ -5,18 +5,20 @@ public class PostDto {
     private String title;
     private String content;
     private String author;
-    private String imageUrl; // 🔹 NEW field
+    private String imageUrl;
+    private Long userId; // 🔹 New field to track which user created the post
 
     // Constructors
     public PostDto() {
     }
 
-    public PostDto(long id, String title, String content, String author, String imageUrl) {
+    public PostDto(long id, String title, String content, String author, String imageUrl, Long userId) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.author = author;
         this.imageUrl = imageUrl;
+        this.userId = userId;
     }
 
     // Getters & Setters
@@ -52,11 +54,19 @@ public class PostDto {
         this.author = author;
     }
 
-    public String getImageUrl() { // 🔹 Getter
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) { // 🔹 Setter
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

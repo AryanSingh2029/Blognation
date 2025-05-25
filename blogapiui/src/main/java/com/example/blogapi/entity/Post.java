@@ -17,9 +17,13 @@ public class Post {
 
     private String author = "Anonymous";
 
-    private String imageUrl; // 🔹 NEW: To store the image URL
+    private String imageUrl;
 
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user; // 🔹 Link to user who created the post
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -39,4 +43,7 @@ public class Post {
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 }

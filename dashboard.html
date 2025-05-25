@@ -178,9 +178,11 @@
     document.addEventListener("DOMContentLoaded", () => {
       const icon = document.querySelector(".dropdown-icon");
       const menu = document.querySelector(".dropdown-menu");
+
       icon.addEventListener("click", () => {
         menu.style.display = menu.style.display === "block" ? "none" : "block";
       });
+
       document.addEventListener("click", (e) => {
         if (!e.target.closest(".profile-dropdown")) {
           menu.style.display = "none";
@@ -188,11 +190,23 @@
       });
 
       const container = document.getElementById("dashboard-posts");
+      const userId = localStorage.getItem("userId");
 
-      fetch(`${BASE_URL}/posts`)
+      if (!userId) {
+        container.innerHTML = "<p>You must be logged in to view your dashboard.</p>";
+        return;
+      }
+
+      // ✅ Fetch only current user's posts
+      fetch(`${BASE_URL}/posts/user/${userId}`)
         .then(res => res.json())
         .then(posts => {
           container.innerHTML = "";
+          if (posts.length === 0) {
+            container.innerHTML = "<p>No posts found.</p>";
+            return;
+          }
+
           posts.forEach(post => {
             const card = document.createElement("div");
             card.className = "post-card";
@@ -238,7 +252,6 @@
       };
 
       document.getElementById("seeFollowersBtn").addEventListener("click", async function () {
-        const userId = localStorage.getItem("userId");
         const container = document.getElementById("followersList");
 
         if (!userId) {
